@@ -7,26 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  password String?
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  active   Boolean?  @default(true)
-  profile  profile[]
-}
-
-model recipe {
-  id          Int      @id @default(autoincrement())
-  profile_id  Int?
-  recipeName  String?
-  thumbnail   String?
-  prepTime    Int?
-  ingredients String?
-  directions  String?
-  profile     profile? @relation(fields: [profile_id], references: [id])
-}
-
-model profile {
+model Profile {
   id         Int      @id @default(autoincrement())
   user_id    Int?
   firstName  String?
@@ -34,6 +15,25 @@ model profile {
   chefRating Int?
   bio        String?
   followers  String?
-  user       user?    @relation(fields: [user_id], references: [id])
-  recipe     recipe[]
+  User       User?    @relation(fields: [user_id], references: [id])
+  Recipe     Recipe[]
+}
+
+model Recipe {
+  id          Int      @id @default(autoincrement())
+  profile_id  Int?
+  recipeName  String?
+  thumbnail   String?
+  prepTime    Int?
+  ingredients String?
+  directions  String?
+  Profile     Profile? @relation(fields: [profile_id], references: [id])
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String?
+  password String?
+  active   Boolean?
+  Profile  Profile[]
 }

@@ -3,29 +3,12 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-
+const router = require('./routes/router.js');
 app.use(express.json());
 app.use(cors());
 
-/** Middleware */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.use('/api', router);
 
 
 function start(port) {
@@ -39,6 +22,6 @@ function start(port) {
 };
 
 module.exports = {
-start,
-server: app,
+    start,
+    server: app,
 }
