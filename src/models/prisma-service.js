@@ -40,6 +40,7 @@ class PrismaService {
 
     };
 
+
     /**
      * createRecipe() will add a new recipe record to the database as well as link it to the profile/user that is making the request.
      * @param {Object} body This is the request body that should contain the following: [ Profile, recipeName, thumbnail, prepTime, ingredients, directions].
@@ -62,6 +63,37 @@ class PrismaService {
 
     };
 
+
+    /**
+     * updateRecipe() will update a recipe record by ID
+     * @param {*} id recipe_id
+     * @param {*} body data fields to update
+     * @returns Updated record from DB
+     */
+    async updateRecipe(id, body) {
+
+        return await prisma.recipe.update({
+            where: { id },
+            data: body
+        });
+
+    };
+
+
+    /**
+     * deleteRecipe() will delete a recipe record by ID
+     * @param {*} id recipe_id
+     * @returns Deleted record from DB
+     */
+    async deleteRecipe(id) {
+
+        return await prisma.recipe.delete({
+            where: { id },
+        });
+
+    }
+
+
     /**
      * getRecipe() will retrieve an individual recipe record by ID
      * @param {Number} id recipe_id
@@ -75,14 +107,25 @@ class PrismaService {
             }
         });
 
+    };
+
+
+    /**
+     * getAllRecipe() will retrieve all recipe records
+     * @returns Response from DB
+     */
+    async getAllRecipe() {
+
+        return await prisma.recipe.findMany();
+
     }
 
 
     /**
-     * getAllRecipe() will retrieve all recipes associated with the provided profile id
+     * getAllPersonalRecipeList() will retrieve all recipes associated with the provided profile id
      * @param {Number} id profile_id
      */
-    async getAllRecipe(id) {
+    async getAllPersonalRecipeList(id) {
 
         return await prisma.recipe.findMany({
             where: {
@@ -91,6 +134,7 @@ class PrismaService {
         })
 
     };
+
 
     /**
      * getProfile() will retrieve the profile that has a matching id
