@@ -4,6 +4,7 @@ const router = express.Router();
 const axios = require('axios');
 
 const PrismaService = require('../models/prisma-service.js');
+const { response } = require('express');
 
 router.post('/signup', signUp);
 // router.post('/signIn', signIn);
@@ -20,15 +21,23 @@ async function searchByCuisine(req, res, next){
 
 let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
 
-let results = await axios.get(url)
-console.log('this is the result', results.data.results)
+let responseFromGet = await axios.get(url)
 
-res.status(200).send(results.data.results);
+res.status(200).send(responseFromGet.data.results);
 }
 
-async function searchByIngredients(arr){
-//https://api.spoonacular.com/recipes/findByIngredients&apiKey=
-// search by ingredients using reduce? to add append to string
+async function searchByIngredients(req, res, next){
+
+    try{
+        let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${req.body.ingredients}&apiKey=${apiKey}`;
+        let responseFromGet = await axios.get(url);
+        res.status(200).send(responseFromGet.data);
+    } catch (error){
+        console.error(error);
+    }
+
+
+
 }
 
 async function getAllUsers(req, res, next) {
