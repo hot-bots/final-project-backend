@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
 const PrismaService = require('../models/prisma-service.js');
 
@@ -14,7 +15,26 @@ router.get('/getAllRecipe/:id', getAllRecipe);
 router.get('/recipe/:id', getRecipe);
 
 router.post('/recipe', postRecipe);
+// cookbook
+router.get('/searchByCuisine', searchByCuisine);
+router.get('/searchByIngredients', searchByIngredients);
+const apiKey = process.env.apiKey;
+async function searchByCuisine(req, res, next){
+//https://api.spoonacular.com/recipes/{id}/information&apiKey=
+// make get request using cuisine as argument
 
+let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
+
+let results = await axios.get(url)
+console.log('this is the result', results.data.results)
+
+res.status(200).send(results.data.results);
+}
+
+async function searchByIngredients(arr){
+//https://api.spoonacular.com/recipes/findByIngredients&apiKey=
+// search by ingredients using reduce? to add append to string
+}
 
 async function getAllUsers(req, res, next) {
 
