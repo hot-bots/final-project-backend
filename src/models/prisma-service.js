@@ -151,6 +151,12 @@ class PrismaService {
     };
 
 
+    async getUsers() {
+
+        return await prisma.user.findMany();
+
+    }
+
 }
 
 module.exports = new PrismaService();

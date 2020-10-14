@@ -15,24 +15,24 @@ router.get('/profile/:id', getProfile);
 router.get('/searchByCuisine', searchByCuisine);
 router.get('/searchByIngredients', searchByIngredients);
 const apiKey = process.env.apiKey;
-async function searchByCuisine(req, res, next){
-//https://api.spoonacular.com/recipes/{id}/information&apiKey=
-// make get request using cuisine as argument
+async function searchByCuisine(req, res, next) {
+    //https://api.spoonacular.com/recipes/{id}/information&apiKey=
+    // make get request using cuisine as argument
 
-let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
+    let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
 
-let responseFromGet = await axios.get(url)
+    let responseFromGet = await axios.get(url)
 
-res.status(200).send(responseFromGet.data.results);
+    res.status(200).send(responseFromGet.data.results);
 }
 
-async function searchByIngredients(req, res, next){
+async function searchByIngredients(req, res, next) {
 
-    try{
+    try {
         let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${req.body.ingredients}&apiKey=${apiKey}`;
         let responseFromGet = await axios.get(url);
         res.status(200).send(responseFromGet.data);
-    } catch (error){
+    } catch (error) {
         console.error(error);
     }
 
@@ -44,7 +44,7 @@ async function getAllUsers(req, res, next) {
 
     try {
 
-        const results = await PrismaService.getMany('user');
+        const results = await PrismaService.getUsers();
         res.status(200).send(results);
 
     } catch (err) {
