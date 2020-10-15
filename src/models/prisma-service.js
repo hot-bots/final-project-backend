@@ -150,6 +150,20 @@ class PrismaService {
 
     };
 
+    /**
+     * updateProfile() will update the profile with the provided id
+     */
+    async updateProfile(id, body) {
+
+        return await prisma.profile.update({
+            where: { id },
+            data: {
+                cookbook: JSON.stringify(body)
+            }
+        });
+
+    };
+
 
 }
 

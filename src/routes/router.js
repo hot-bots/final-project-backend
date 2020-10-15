@@ -14,25 +14,46 @@ router.get('/profile/:id', getProfile);
 // cookbook
 router.get('/searchByCuisine', searchByCuisine);
 router.get('/searchByIngredients', searchByIngredients);
-const apiKey = process.env.apiKey;
-async function searchByCuisine(req, res, next){
-//https://api.spoonacular.com/recipes/{id}/information&apiKey=
-// make get request using cuisine as argument
 
-let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
+// add to favorites
+router.put('/addToCookbook/:id', addToCookbook);
 
-let responseFromGet = await axios.get(url)
 
-res.status(200).send(responseFromGet.data.results);
+
+
+// we want to replace the current cookbook for given user with the incoming cookbook array
+async function addToCookbook(req, res, next) {
+    // profile id of user whose cookbook we want to update
+    let id = parseInt(req.params.id)
+
+    const response = await PrismaService.updateProfile(id, req.body.data)
+
+    res.status(200).send(response);
+
 }
 
-async function searchByIngredients(req, res, next){
 
-    try{
+
+
+const apiKey = process.env.apiKey;
+async function searchByCuisine(req, res, next) {
+    //https://api.spoonacular.com/recipes/{id}/information&apiKey=
+    // make get request using cuisine as argument
+
+    let url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${req.body.cuisine}&apiKey=${apiKey}`
+
+    let responseFromGet = await axios.get(url)
+
+    res.status(200).send(responseFromGet.data.results);
+}
+
+async function searchByIngredients(req, res, next) {
+
+    try {
         let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${req.body.ingredients}&apiKey=${apiKey}`;
         let responseFromGet = await axios.get(url);
         res.status(200).send(responseFromGet.data);
-    } catch (error){
+    } catch (error) {
         console.error(error);
     }
 
