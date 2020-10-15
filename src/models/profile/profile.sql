@@ -5,7 +5,7 @@ CREATE TABLE "Profile"
     firstName TEXT,
     lastName TEXT,
     chefRating INTEGER,
-    bio TEXT,
+    cookbook TEXT,
     followers TEXT,
     CONSTRAINT profile_user_id_fkey FOREIGN KEY ("user_id") REFERENCES "User" (id)
 );

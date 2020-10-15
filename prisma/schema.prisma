@@ -13,7 +13,7 @@ model Profile {
   firstName  String?
   lastName   String?
   chefRating Int?
-  bio        String?
+  cookbook   String?
   followers  String?
   User       User?    @relation(fields: [user_id], references: [id])
   Recipe     Recipe[]
@@ -22,17 +22,20 @@ model Profile {
 model Recipe {
   id          Int      @id @default(autoincrement())
   profile_id  Int?
+  author      String?
+  sourceUrl   String?
   recipeName  String?
   thumbnail   String?
   prepTime    Int?
   ingredients String?
   directions  String?
+  likes       Int?
   Profile     Profile? @relation(fields: [profile_id], references: [id])
 }
 
 model User {
   id       Int       @id @default(autoincrement())
-  email    String?
+  username String?
   password String?
   active   Boolean?
   Profile  Profile[]

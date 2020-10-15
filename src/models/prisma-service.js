@@ -26,7 +26,7 @@ class PrismaService {
                         firstName,
                         lastName,
                         chefRating: 1,
-                        bio: '',
+                        cookbook: '',
                         followers: ''
                     }
                 }

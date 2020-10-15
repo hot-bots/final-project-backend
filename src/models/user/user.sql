@@ -1,7 +1,7 @@
 CREATE TABLE "User"
 (
     id INTEGER PRIMARY KEY,
-    email TEXT,
+    username TEXT,
     password TEXT,
     active BOOLEAN
 );
