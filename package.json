@@ -38,6 +38,9 @@
       "name": "Lulu Sevignon"
     }
   ],
+  "engines": {
+    "node": "14.8.0"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hot-bots/final-project-backend/issues"
